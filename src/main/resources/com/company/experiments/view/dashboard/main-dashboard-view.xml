@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://mainDashboardView.title">
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <vbox width="100%" height="100%" padding="true" spacing="true">
+            <hbox width="100%" classNames="dashboard-header">
+                <h1 id="dashboardTitle" text="Main Dashboard"/>
+                <button id="refreshButton" text="Refresh" icon="REFRESH"/>
+                <button id="exportPdfButton" text="Export PDF" icon="DOWNLOAD"/>
+                <button id="exportExcelButton" text="Export Excel" icon="FILE_O"/>
+            </hbox>
+
+            <tabSheet id="dashboardTabs" width="100%" height="100%">
+                <!-- Executive Summary Tab -->
+                <tab id="executiveSummaryTab" label="Executive Summary">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h2 text="Key Performance Indicators"/>
+
+                        <hbox width="100%" spacing="true">
+                            <vbox classNames="kpi-card" width="33%">
+                                <h3 text="Unplanned Stops Reduction"/>
+                                <div id="unplannedStopsKpi" classNames="kpi-value"/>
+                                <span id="unplannedStopsTrend" classNames="kpi-trend"/>
+                            </vbox>
+
+                            <vbox classNames="kpi-card" width="33%">
+                                <h3 text="Maintenance Cost Savings"/>
+                                <div id="costSavingsKpi" classNames="kpi-value"/>
+                                <span id="costSavingsTrend" classNames="kpi-trend"/>
+                            </vbox>
+
+                            <vbox classNames="kpi-card" width="33%">
+                                <h3 text="Productivity Increase"/>
+                                <div id="productivityKpi" classNames="kpi-value"/>
+                                <span id="productivityTrend" classNames="kpi-trend"/>
+                            </vbox>
+                        </hbox>
+
+                        <h2 text="Performance Charts"/>
+                        <div id="executiveChartsHtml" width="100%" height="400px"/>
+                    </vbox>
+                </tab>
+
+                <!-- Alert Overview Tab -->
+                <tab id="alertOverviewTab" label="Alert Overview">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h2 text="Critical Alerts by Infrastructure Level"/>
+
+                        <hbox width="100%" spacing="true">
+                            <vbox width="50%">
+                                <h3 text="Alert Summary"/>
+                                <div id="alertSummaryHtml" width="100%" height="300px"/>
+                            </vbox>
+
+                            <vbox width="50%">
+                                <h3 text="Alert Distribution"/>
+                                <div id="alertChartHtml" width="100%" height="300px"/>
+                            </vbox>
+                        </hbox>
+
+                        <h3 text="Critical Infrastructure Items"/>
+                        <div id="criticalInfrastructureHtml" width="100%" height="300px"/>
+                    </vbox>
+                </tab>
+
+                <!-- Budget Status Tab -->
+                <tab id="budgetStatusTab" label="Budget Status">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h2 text="Current Year Budget Overview"/>
+
+                        <hbox width="100%" spacing="true">
+                            <vbox classNames="budget-card" width="25%">
+                                <h4 text="Total Budget"/>
+                                <div id="totalBudgetValue" classNames="budget-value"/>
+                            </vbox>
+
+                            <vbox classNames="budget-card" width="25%">
+                                <h4 text="Allocated"/>
+                                <div id="allocatedBudgetValue" classNames="budget-value"/>
+                            </vbox>
+
+                            <vbox classNames="budget-card" width="25%">
+                                <h4 text="Spent"/>
+                                <div id="spentBudgetValue" classNames="budget-value"/>
+                            </vbox>
+
+                            <vbox classNames="budget-card" width="25%">
+                                <h4 text="Remaining"/>
+                                <div id="remainingBudgetValue" classNames="budget-value"/>
+                            </vbox>
+                        </hbox>
+
+                        <h3 text="Budget Allocation Chart"/>
+                        <div id="budgetChartHtml" width="100%" height="400px"/>
+                    </vbox>
+                </tab>
+
+                <!-- Team Utilization Tab -->
+                <tab id="teamUtilizationTab" label="Team Utilization">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h2 text="Employee Availability and Workload"/>
+
+                        <hbox width="100%" spacing="true">
+                            <vbox width="50%">
+                                <h3 text="Team Capacity"/>
+                                <div id="teamCapacityHtml" width="100%" height="300px"/>
+                            </vbox>
+
+                            <vbox width="50%">
+                                <h3 text="Workload Distribution"/>
+                                <div id="workloadChartHtml" width="100%" height="300px"/>
+                            </vbox>
+                        </hbox>
+
+                        <h3 text="Employee Assignments"/>
+                        <div id="employeeAssignmentsHtml" width="100%" height="300px"/>
+                    </vbox>
+                </tab>
+
+                <!-- Upcoming Maintenance Tab -->
+                <tab id="upcomingMaintenanceTab" label="Upcoming Maintenance">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h2 text="Next 30 Days Planned Activities"/>
+
+                        <hbox width="100%" spacing="true">
+                            <select id="filterTeamSelect" label="Filter by Team" clearButtonVisible="true"/>
+                            <select id="filterStatusSelect" label="Filter by Status"
+                                    itemsEnum="com.company.experiments.entity.TacticalPlanStatus"
+                                    clearButtonVisible="true"/>
+                        </hbox>
+
+                        <div id="upcomingMaintenanceCalendarHtml" width="100%" height="500px"/>
+                    </vbox>
+                </tab>
+
+                <!-- Reports Tab -->
+                <tab id="reportsTab" label="Reports">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h2 text="Generate Reports"/>
+
+                        <formLayout>
+                            <select id="reportTypeSelect" label="Report Type"/>
+
+                            <datePicker id="reportStartDate" label="Start Date"/>
+                            <datePicker id="reportEndDate" label="End Date"/>
+
+                            <hbox spacing="true">
+                                <button id="generateReportButton" text="Generate Report" icon="FILE_TEXT"/>
+                                <button id="exportReportPdfButton" text="Export PDF" icon="DOWNLOAD"/>
+                                <button id="exportReportExcelButton" text="Export Excel" icon="TABLE"/>
+                            </hbox>
+                        </formLayout>
+
+                        <h3 text="Report Preview"/>
+                        <div id="reportPreviewHtml" width="100%" height="400px"/>
+                    </vbox>
+                </tab>
+            </tabSheet>
+        </vbox>
+    </layout>
+</view>

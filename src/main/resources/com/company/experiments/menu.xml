@@ -2,6 +2,8 @@
 <menu-config xmlns="http://jmix.io/schema/flowui/menu">
 
     <menu id="application" title="msg://com.company.experiments/menu.application.title" opened="true">
+        <item view="MainDashboard" title="msg://com.company.experiments.view.dashboard/mainDashboardView.title"/>
+        <separator/>
         <item view="User.list" title="msg://com.company.experiments.view.user/UserListView.title"/>
         <separator/>
         <item view="InfrastructureLevel.list" title="msg://com.company.experiments.view.infrastructurelevel/infrastructureLevelListView.title"/>

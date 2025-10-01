@@ -7,10 +7,6 @@
                     class="com.company.experiments.entity.ScenarioComparison">
             <fetchPlan extends="_base">
                 <property name="baselineScenario" fetchPlan="_instance_name"/>
-                <property name="createdBy" fetchPlan="_base">
-                    <property name="firstName"/>
-                    <property name="lastName"/>
-                </property>
             </fetchPlan>
             <loader id="scenarioComparisonDl" readOnly="true">
                 <query>
@@ -33,7 +29,7 @@
     <layout>
         <genericFilter id="genericFilter"
                        dataLoader="scenarioComparisonDl">
-            <properties include=".*"/>
+            <properties include="comparisonName|baselineScenario|createdAt"/>
         </genericFilter>
         <hbox id="buttonsPanel" classNames="buttons-panel">
             <button id="createButton" action="scenarioComparisonDataGrid.create"/>
@@ -54,7 +50,6 @@
             <columns resizable="true">
                 <column property="comparisonName"/>
                 <column property="baselineScenario"/>
-                <column property="createdBy"/>
                 <column property="createdAt"/>
             </columns>
         </dataGrid>
