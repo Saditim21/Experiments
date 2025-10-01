@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://ruleExecutionLogListView.title"
+      focusComponent="ruleExecutionLogsDataGrid">
+    <data>
+        <collection id="ruleExecutionLogsDc"
+                    class="com.company.experiments.entity.RuleExecutionLog">
+            <fetchPlan extends="_base">
+                <property name="ruleScenario" fetchPlan="_instance_name"/>
+                <property name="triggeredBy" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="ruleExecutionLogsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from RuleExecutionLog e order by e.executedAt desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="ruleExecutionLogsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="refreshButton" text="Refresh" icon="REFRESH"/>
+            <button id="clearOldLogsButton" text="Clear Old Logs" themeNames="error"/>
+            <simplePagination id="pagination" dataLoader="ruleExecutionLogsDl"/>
+        </hbox>
+        <dataGrid id="ruleExecutionLogsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="ruleExecutionLogsDc">
+            <columns resizable="true">
+                <column property="ruleScenario"/>
+                <column property="executedAt"/>
+                <column property="success"/>
+                <column property="executionTimeMs"/>
+                <column property="triggeredBy"/>
+                <column property="inputData"/>
+                <column property="outputData"/>
+                <column property="errorMessage"/>
+            </columns>
+        </dataGrid>
+    </layout>
+</view>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Infrastructure Level Entity -->
+    <changeSet id="1" author="infrastructure-module">
+        <createTable tableName="INFRASTRUCTURE_LEVEL">
+            <column name="ID" type="${uuid.type}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="VERSION" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="LEVEL_" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="varchar(1000)"/>
+            <column name="PARENT_LEVEL_ID" type="${uuid.type}"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="infrastructure-module">
+        <createIndex indexName="IDX_INFRASTRUCTURE_LEVEL_CODE"
+                     tableName="INFRASTRUCTURE_LEVEL" unique="true">
+            <column name="CODE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="3" author="infrastructure-module">
+        <addForeignKeyConstraint baseTableName="INFRASTRUCTURE_LEVEL"
+                                 baseColumnNames="PARENT_LEVEL_ID"
+                                 constraintName="FK_INFRASTRUCTURE_LEVEL_PARENT"
+                                 referencedTableName="INFRASTRUCTURE_LEVEL"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+    <!-- Infrastructure Hierarchy Entity -->
+    <changeSet id="4" author="infrastructure-module">
+        <createTable tableName="INFRASTRUCTURE_HIERARCHY">
+            <column name="ID" type="${uuid.type}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="VERSION" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="INFRASTRUCTURE_LEVEL_ID" type="${uuid.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PARENT_NODE_ID" type="${uuid.type}"/>
+            <column name="ASSET_TYPE" type="varchar(255)"/>
+            <column name="STATUS" type="varchar(50)"/>
+            <column name="INSTALLATION_DATE" type="date"/>
+            <column name="CRITICALITY_SCORE" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="infrastructure-module">
+        <createIndex indexName="IDX_INFRASTRUCTURE_HIERARCHY_CODE"
+                     tableName="INFRASTRUCTURE_HIERARCHY" unique="true">
+            <column name="CODE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="6" author="infrastructure-module">
+        <addForeignKeyConstraint baseTableName="INFRASTRUCTURE_HIERARCHY"
+                                 baseColumnNames="INFRASTRUCTURE_LEVEL_ID"
+                                 constraintName="FK_INFRA_HIERARCHY_LEVEL"
+                                 referencedTableName="INFRASTRUCTURE_LEVEL"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet id="7" author="infrastructure-module">
+        <addForeignKeyConstraint baseTableName="INFRASTRUCTURE_HIERARCHY"
+                                 baseColumnNames="PARENT_NODE_ID"
+                                 constraintName="FK_INFRA_HIERARCHY_PARENT"
+                                 referencedTableName="INFRASTRUCTURE_HIERARCHY"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+</databaseChangeLog>

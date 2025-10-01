@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://healthPortalView.title">
+    <data>
+        <collection id="healthAlertsDc"
+                    class="com.company.experiments.entity.HealthAlert">
+            <fetchPlan extends="_base">
+                <property name="infrastructureNode" fetchPlan="_instance_name"/>
+                <property name="assignedTo" fetchPlan="_instance_name"/>
+            </fetchPlan>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <vbox width="100%" height="100%" padding="true" spacing="true">
+            <hbox width="100%" justifyContent="BETWEEN" alignItems="CENTER" padding="true">
+                <h2 text="Health Portal Dashboard" classNames="dashboard-title"/>
+                <button id="refreshButton" text="Refresh" icon="REFRESH" themeNames="icon"/>
+            </hbox>
+
+            <!-- Summary Cards -->
+            <hbox width="100%" spacing="true" padding="true">
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #ffebee; border-radius: 8px; padding: 16px;">
+                    <span text="Critical Alerts" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="criticalCountLabel" classNames="card-value h1" style="font-size: 2em; font-weight: bold; color: #d32f2f;"/>
+                </vbox>
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #fff3e0; border-radius: 8px; padding: 16px;">
+                    <span text="High Priority" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="highCountLabel" classNames="card-value h1" style="font-size: 2em; font-weight: bold; color: #f57c00;"/>
+                </vbox>
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #fffde7; border-radius: 8px; padding: 16px;">
+                    <span text="Medium Priority" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="mediumCountLabel" classNames="card-value h1" style="font-size: 2em; font-weight: bold; color: #fbc02d;"/>
+                </vbox>
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #e8f5e9; border-radius: 8px; padding: 16px;">
+                    <span text="Open Alerts" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="openAlertsCountLabel" classNames="card-value h1" style="font-size: 2em; font-weight: bold; color: #388e3c;"/>
+                </vbox>
+            </hbox>
+
+            <!-- Main Content Area -->
+            <hbox width="100%" height="100%" spacing="true">
+                <!-- Left: Alert List -->
+                <vbox width="60%" height="100%" spacing="true">
+                    <hbox width="100%" spacing="true" padding="true"
+                          style="background-color: #f5f5f5; border-radius: 8px; padding: 12px;">
+                        <h4 text="Alerts" style="margin: 0; flex: 1;"/>
+                        <span text="Status:" style="align-self: center;"/>
+                        <select id="statusFilter" width="150px" placeholder="All Statuses"/>
+                        <span text="Severity:" style="align-self: center;"/>
+                        <select id="severityFilter" width="150px" placeholder="All Severities"/>
+                    </hbox>
+
+                    <dataGrid id="alertsDataGrid"
+                              width="100%"
+                              height="100%"
+                              dataContainer="healthAlertsDc">
+                        <columns resizable="true">
+                            <column property="alertId" width="120px"/>
+                            <column property="infrastructureNode" width="150px"/>
+                            <column property="severity" width="100px"/>
+                            <column property="status" width="120px"/>
+                            <column property="detectedAt" width="150px"/>
+                            <column property="assignedTo" width="150px"/>
+                        </columns>
+                    </dataGrid>
+
+                    <hbox width="100%" spacing="true" padding="true"
+                          style="background-color: #f5f5f5; border-radius: 8px; padding: 12px;">
+                        <span text="Bulk Assign to:" style="align-self: center;"/>
+                        <select id="employeeSelect" width="250px" placeholder="Select Employee"/>
+                        <button id="bulkAssignButton" text="Assign Selected" themeNames="primary"/>
+                    </hbox>
+                </vbox>
+
+                <!-- Right: Infrastructure Tree -->
+                <vbox width="40%" height="100%" spacing="true" padding="true"
+                      style="background-color: #fafafa; border-radius: 8px; padding: 16px;">
+                    <h4 text="Infrastructure Health Status" style="margin-top: 0;"/>
+                    <div id="infrastructureTreeContainer" width="100%" height="100%"/>
+                </vbox>
+            </hbox>
+        </vbox>
+    </layout>
+</view>

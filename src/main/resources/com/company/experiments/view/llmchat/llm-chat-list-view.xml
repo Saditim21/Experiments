@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://llmChatListView.title"
+      focusComponent="llmChatsDataGrid">
+    <data>
+        <collection id="llmChatsDc"
+                    class="com.company.experiments.entity.LlmChat">
+            <fetchPlan extends="_base">
+                <property name="employee" fetchPlan="_instance_name"/>
+                <property name="relatedAlert" fetchPlan="_instance_name"/>
+                <property name="relatedInfrastructure" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="llmChatsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from LlmChat e order by e.lastMessageAt desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="llmChatsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="llmChatsDataGrid.create"/>
+            <button id="editButton" action="llmChatsDataGrid.edit"/>
+            <button id="removeButton" action="llmChatsDataGrid.remove"/>
+            <button id="openChatButton" text="Open Chat Interface"/>
+            <simplePagination id="pagination" dataLoader="llmChatsDl"/>
+        </hbox>
+        <dataGrid id="llmChatsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="llmChatsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="chatId"/>
+                <column property="chatName"/>
+                <column property="employee"/>
+                <column property="status"/>
+                <column property="startedAt"/>
+                <column property="lastMessageAt"/>
+                <column property="relatedAlert"/>
+                <column property="relatedInfrastructure"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/flowui/menu">
+
+    <menu id="application" title="msg://com.company.experiments/menu.application.title" opened="true">
+        <item view="User.list" title="msg://com.company.experiments.view.user/UserListView.title"/>
+        <separator/>
+        <item view="InfrastructureLevel.list" title="msg://com.company.experiments.view.infrastructurelevel/infrastructureLevelListView.title"/>
+        <item view="InfrastructureHierarchy.list" title="msg://com.company.experiments.view.infrastructurehierarchy/infrastructureHierarchyListView.title"/>
+        <separator/>
+        <menu id="planningMenu" title="Planning" opened="false">
+            <item view="TheoreticalMaintenanceScenario.list" title="msg://com.company.experiments.view.theoreticalmaintenancescenario/theoreticalMaintenanceScenarioListView.title"/>
+            <item view="YearlyBudgetPlanningScenario.list" title="msg://com.company.experiments.view.yearlybudgetplanningscenario/yearlyBudgetPlanningScenarioListView.title"/>
+            <item view="TacticalPlan.list" title="msg://com.company.experiments.view.tacticalplan/tacticalPlanListView.title"/>
+            <item view="TacticalPlan.gantt" title="msg://com.company.experiments.view.tacticalplan/tacticalPlanGanttView.title"/>
+        </menu>
+        <separator/>
+        <menu id="experimentalMenu" title="Experimental Planning" opened="false">
+            <item view="ScenarioComparison.list" title="msg://com.company.experiments.view.scenariocomparison/scenarioComparisonListView.title"/>
+        </menu>
+        <separator/>
+        <menu id="resourceMenu" title="Resources" opened="false">
+            <item view="Team.list" title="msg://com.company.experiments.view.team/teamListView.title"/>
+            <item view="Employee.list" title="msg://com.company.experiments.view.employee/employeeListView.title"/>
+        </menu>
+    </menu>
+
+</menu-config>

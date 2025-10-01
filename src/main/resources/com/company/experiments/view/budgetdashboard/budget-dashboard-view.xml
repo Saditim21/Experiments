@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://budgetDashboardView.title">
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <vbox width="100%" height="100%" padding="true" spacing="true">
+            <hbox width="100%" justifyContent="BETWEEN" alignItems="CENTER" padding="true">
+                <h2 text="Budget Dashboard" classNames="dashboard-title"/>
+                <hbox spacing="true" alignItems="CENTER">
+                    <span text="Year:"/>
+                    <comboBox id="yearFilterCombo" width="150px"/>
+                </hbox>
+            </hbox>
+
+            <!-- Summary Cards -->
+            <hbox width="100%" spacing="true" padding="true">
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #e3f2fd; border-radius: 8px; padding: 16px;">
+                    <span text="Total Allocated" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="totalAllocatedLabel" classNames="card-value h1" style="font-size: 1.8em; font-weight: bold; color: #1976d2;"/>
+                </vbox>
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #fff3e0; border-radius: 8px; padding: 16px;">
+                    <span text="Total Spent" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="totalSpentLabel" classNames="card-value h1" style="font-size: 1.8em; font-weight: bold; color: #f57c00;"/>
+                </vbox>
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #e8f5e9; border-radius: 8px; padding: 16px;">
+                    <span text="Total Remaining" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="totalRemainingLabel" classNames="card-value h1" style="font-size: 1.8em; font-weight: bold; color: #388e3c;"/>
+                </vbox>
+                <vbox classNames="summary-card" padding="true" spacing="false"
+                      style="flex: 1; background-color: #f3e5f5; border-radius: 8px; padding: 16px;">
+                    <span text="Overall Spent %" classNames="card-label" style="font-size: 0.9em; color: #666;"/>
+                    <span id="overallPercentageLabel" classNames="card-value h1" style="font-size: 1.8em; font-weight: bold;"/>
+                </vbox>
+            </hbox>
+
+            <!-- Charts Container -->
+            <div id="dashboardContent" width="100%" height="100%"
+                 style="overflow-y: auto; padding: 16px; background-color: #fafafa; border-radius: 8px;"/>
+        </vbox>
+    </layout>
+</view>

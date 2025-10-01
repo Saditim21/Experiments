@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://scenarioComparisonDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="scenarioComparisonDc"
+                  class="com.company.experiments.entity.ScenarioComparison">
+            <fetchPlan extends="_base">
+                <property name="baselineScenario" fetchPlan="_instance_name"/>
+                <property name="alternativeScenarios" fetchPlan="_instance_name"/>
+                <property name="createdBy" fetchPlan="_base">
+                    <property name="firstName"/>
+                    <property name="lastName"/>
+                    <property name="email"/>
+                    <property name="employeeCode"/>
+                </property>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="scenarioComparisonDc">
+            <textField id="comparisonNameField" property="comparisonName" colspan="2"/>
+            <entityPicker id="baselineScenarioField" property="baselineScenario" colspan="2">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityComboBox id="alternativeScenariosField" property="alternativeScenarios" colspan="2"/>
+            <textArea id="comparisonMetricsField" property="comparisonMetrics" colspan="2" height="10em"/>
+            <entityPicker id="createdByField" property="createdBy">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

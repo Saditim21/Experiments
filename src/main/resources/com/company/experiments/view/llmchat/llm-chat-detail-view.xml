@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://llmChatDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="llmChatDc"
+                  class="com.company.experiments.entity.LlmChat">
+            <fetchPlan extends="_base">
+                <property name="employee" fetchPlan="_instance_name"/>
+                <property name="relatedAlert" fetchPlan="_instance_name"/>
+                <property name="relatedInfrastructure" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="llmChatDc">
+            <textField id="chatIdField" property="chatId" readOnly="true"/>
+            <textField id="chatNameField" property="chatName" required="true"/>
+            <entityPicker id="employeeField" property="employee" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="relatedAlertField" property="relatedAlert">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="relatedInfrastructureField" property="relatedInfrastructure">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <dateTimePicker id="startedAtField" property="startedAt" readOnly="true"/>
+            <dateTimePicker id="lastMessageAtField" property="lastMessageAt" readOnly="true"/>
+            <entityComboBox id="statusField" property="status" required="true"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

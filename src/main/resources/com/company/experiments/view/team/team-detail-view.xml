@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://teamDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="teamDc"
+                  class="com.company.experiments.entity.Team">
+            <fetchPlan extends="_base">
+                <property name="teamLead" fetchPlan="_instance_name"/>
+                <property name="infrastructureResponsibility" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+        <collection id="infrastructureResponsibilityDc" class="com.company.experiments.entity.InfrastructureHierarchy">
+            <fetchPlan extends="_instance_name"/>
+            <loader id="infrastructureResponsibilityDl">
+                <query>
+                    <![CDATA[select e from InfrastructureHierarchy e order by e.name]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="teamDc">
+            <textField id="codeField" property="code" required="true"/>
+            <textField id="nameField" property="name" required="true"/>
+            <textField id="departmentField" property="department"/>
+            <entityPicker id="teamLeadField" property="teamLead">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <multiSelectListBox id="infrastructureResponsibilityField"
+                                property="infrastructureResponsibility"
+                                itemsContainer="infrastructureResponsibilityDc"
+                                height="15em"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

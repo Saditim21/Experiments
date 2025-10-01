@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://scenarioComparisonListView.title"
+      focusComponent="scenarioComparisonDataGrid">
+    <data>
+        <collection id="scenarioComparisonDc"
+                    class="com.company.experiments.entity.ScenarioComparison">
+            <fetchPlan extends="_base">
+                <property name="baselineScenario" fetchPlan="_instance_name"/>
+                <property name="createdBy" fetchPlan="_base">
+                    <property name="firstName"/>
+                    <property name="lastName"/>
+                </property>
+            </fetchPlan>
+            <loader id="scenarioComparisonDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from ScenarioComparison e order by e.createdAt desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="scenarioComparisonDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="scenarioComparisonDataGrid.create"/>
+            <button id="editButton" action="scenarioComparisonDataGrid.edit"/>
+            <button id="removeButton" action="scenarioComparisonDataGrid.remove"/>
+            <button id="dashboardButton" text="Open Dashboard" icon="DASHBOARD"/>
+            <simplePagination id="pagination" dataLoader="scenarioComparisonDl"/>
+        </hbox>
+        <dataGrid id="scenarioComparisonDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="scenarioComparisonDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="comparisonName"/>
+                <column property="baselineScenario"/>
+                <column property="createdBy"/>
+                <column property="createdAt"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

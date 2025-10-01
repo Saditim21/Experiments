@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://infrastructureLevelListView.title"
+      focusComponent="infrastructureLevelsDataGrid">
+    <data>
+        <collection id="infrastructureLevelsDc"
+                    class="com.company.experiments.entity.InfrastructureLevel">
+            <fetchPlan extends="_base">
+                <property name="parentLevel" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="infrastructureLevelsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from InfrastructureLevel e order by e.level]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="infrastructureLevelsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="infrastructureLevelsDataGrid.create"/>
+            <button id="editButton" action="infrastructureLevelsDataGrid.edit"/>
+            <button id="removeButton" action="infrastructureLevelsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="infrastructureLevelsDl"/>
+        </hbox>
+        <dataGrid id="infrastructureLevelsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="infrastructureLevelsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="code"/>
+                <column property="name"/>
+                <column property="level"/>
+                <column property="parentLevel"/>
+                <column property="description"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

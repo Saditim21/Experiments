@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeCalendarCalendarView.title">
+    <data>
+        <collection id="employeeCalendarsDc"
+                    class="com.company.experiments.entity.EmployeeCalendar">
+            <fetchPlan extends="_base">
+                <property name="employee" fetchPlan="_instance_name">
+                    <property name="firstName"/>
+                    <property name="lastName"/>
+                </property>
+            </fetchPlan>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <vbox width="100%" height="100%" padding="true" spacing="true">
+            <hbox width="100%" justifyContent="BETWEEN" alignItems="CENTER">
+                <button id="prevMonthButton" text="&lt; Previous"/>
+                <span id="monthYearLabel" classNames="h2"/>
+                <button id="nextMonthButton" text="Next &gt;"/>
+            </hbox>
+            <div id="calendarContainer" width="100%" height="100%"
+                 style="overflow-x: auto; overflow-y: auto;"/>
+            <hbox width="100%" spacing="true" alignItems="CENTER">
+                <span text="Legend:" classNames="bold"/>
+                <span text="A - Available" style="color: #4CAF50;"/>
+                <span text="V - Vacation" style="color: #2196F3;"/>
+                <span text="S - Sick" style="color: #F44336;"/>
+                <span text="T - Training" style="color: #FF9800;"/>
+            </hbox>
+        </vbox>
+    </layout>
+</view>

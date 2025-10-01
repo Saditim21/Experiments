@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://budgetCategoryDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="budgetCategoryDc"
+                  class="com.company.experiments.entity.BudgetCategory">
+            <fetchPlan extends="_base">
+                <property name="parentCategory" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="budgetCategoryDc">
+            <textField id="codeField" property="code" required="true"/>
+            <textField id="nameField" property="name" required="true"/>
+            <entityComboBox id="categoryTypeField" property="categoryType" required="true"/>
+            <entityPicker id="parentCategoryField" property="parentCategory">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

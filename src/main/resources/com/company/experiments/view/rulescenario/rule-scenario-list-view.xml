@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://ruleScenarioListView.title"
+      focusComponent="ruleScenariosDataGrid">
+    <data>
+        <collection id="ruleScenariosDc"
+                    class="com.company.experiments.entity.RuleScenario">
+            <fetchPlan extends="_base">
+                <property name="createdBy" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="ruleScenariosDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from RuleScenario e order by e.priority desc, e.name]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="ruleScenariosDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="ruleScenariosDataGrid.create"/>
+            <button id="editButton" action="ruleScenariosDataGrid.edit"/>
+            <button id="removeButton" action="ruleScenariosDataGrid.remove"/>
+            <button id="ruleBuilderButton" text="Rule Builder"/>
+            <button id="executionLogsButton" text="Execution Logs"/>
+            <simplePagination id="pagination" dataLoader="ruleScenariosDl"/>
+        </hbox>
+        <dataGrid id="ruleScenariosDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="ruleScenariosDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="code"/>
+                <column property="name"/>
+                <column property="scenarioType"/>
+                <column property="priority"/>
+                <column property="isActive"/>
+                <column property="executionCount"/>
+                <column property="lastExecutedAt"/>
+                <column property="createdBy"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

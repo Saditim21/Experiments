@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://yearlyBudgetListView.title"
+      focusComponent="yearlyBudgetsDataGrid">
+    <data>
+        <collection id="yearlyBudgetsDc"
+                    class="com.company.experiments.entity.YearlyBudget">
+            <fetchPlan extends="_base">
+                <property name="budgetCategory" fetchPlan="_instance_name"/>
+                <property name="team" fetchPlan="_instance_name"/>
+                <property name="infrastructureLevel" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="yearlyBudgetsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from YearlyBudget e order by e.year desc, e.budgetCategory.name]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="yearlyBudgetsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="yearlyBudgetsDataGrid.create"/>
+            <button id="editButton" action="yearlyBudgetsDataGrid.edit"/>
+            <button id="removeButton" action="yearlyBudgetsDataGrid.remove"/>
+            <button id="dashboardButton" text="Budget Dashboard"/>
+            <simplePagination id="pagination" dataLoader="yearlyBudgetsDl"/>
+        </hbox>
+        <dataGrid id="yearlyBudgetsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="yearlyBudgetsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="year"/>
+                <column property="budgetCategory"/>
+                <column property="team"/>
+                <column property="infrastructureLevel"/>
+                <column property="allocatedAmount"/>
+                <column property="spentAmount"/>
+                <column property="currency"/>
+                <column property="status"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

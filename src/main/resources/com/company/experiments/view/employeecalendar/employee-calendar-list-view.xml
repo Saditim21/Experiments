@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeCalendarListView.title"
+      focusComponent="employeeCalendarsDataGrid">
+    <data>
+        <collection id="employeeCalendarsDc"
+                    class="com.company.experiments.entity.EmployeeCalendar">
+            <fetchPlan extends="_base">
+                <property name="employee" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="employeeCalendarsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from EmployeeCalendar e order by e.date desc, e.employee.lastName]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="employeeCalendarsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="employeeCalendarsDataGrid.create"/>
+            <button id="editButton" action="employeeCalendarsDataGrid.edit"/>
+            <button id="removeButton" action="employeeCalendarsDataGrid.remove"/>
+            <button id="calendarViewButton" text="Calendar View"/>
+            <simplePagination id="pagination" dataLoader="employeeCalendarsDl"/>
+        </hbox>
+        <dataGrid id="employeeCalendarsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="employeeCalendarsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="employee"/>
+                <column property="date"/>
+                <column property="availabilityType"/>
+                <column property="hoursAvailable"/>
+                <column property="notes"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

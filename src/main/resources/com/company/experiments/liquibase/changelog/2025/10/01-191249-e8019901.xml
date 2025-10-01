@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="Experiments">
+        <createTable tableName="TACTICAL_PLAN">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TACTICAL_PLAN"/>
+            </column>
+            <column name="PLAN_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANNING_SCENARIO_ID" type="UUID"/>
+            <column name="MAINTENANCE_SCENARIO_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANNED_START_DATE" type="DATE"/>
+            <column name="PLANNED_END_DATE" type="DATE"/>
+            <column name="ASSIGNED_TEAM_ID" type="UUID"/>
+            <column name="BUDGET_ALLOCATED" type="DECIMAL(19, 2)"/>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="Experiments">
+        <createTable tableName="TACTICAL_PLAN_EMPLOYEE_LINK">
+            <column name="EMPLOYEE_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TACTICAL_PLAN_EMPLOYEE_LINK"/>
+            </column>
+            <column name="TACTICAL_PLAN_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TACTICAL_PLAN_EMPLOYEE_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="Experiments">
+        <createTable tableName="THEORETICAL_MAINTENANCE_SCENARIO">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_THEORETICAL_MAINTENANCE_SCENARIO"/>
+            </column>
+            <column name="SCENARIO_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCENARIO_CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFRASTRUCTURE_NODE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MAINTENANCE_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ESTIMATED_DURATION" type="INT"/>
+            <column name="REQUIRED_SKILLS" type="VARCHAR(1000)"/>
+            <column name="ESTIMATED_COST" type="DECIMAL(19, 2)"/>
+            <column name="FREQUENCY" type="VARCHAR(255)"/>
+            <column name="PRIORITY" type="INT"/>
+            <column name="SAFETY_REQUIREMENTS" type="CLOB"/>
+            <column name="CREATED_AT" type="DATETIME"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="Experiments">
+        <createTable tableName="YEARLY_BUDGET_PLANNING_SCENARIO">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_YEARLY_BUDGET_PLANNING_SCENARIO"/>
+            </column>
+            <column name="SCENARIO_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="YEAR_" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(255)"/>
+            <column name="TOTAL_BUDGET" type="DECIMAL(19, 2)"/>
+            <column name="OPTIMIZATION_TARGET" type="VARCHAR(255)"/>
+            <column name="CONSTRAINTS" type="CLOB"/>
+            <column name="CREATED_BY_ID" type="UUID"/>
+            <column name="CREATED_AT" type="DATETIME"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="Experiments">
+        <createIndex indexName="IDX_THEORETICAL_MAINTENANCE_SCENARIO_CODE" tableName="THEORETICAL_MAINTENANCE_SCENARIO"
+                     unique="true">
+            <column name="SCENARIO_CODE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="6" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="TACTICAL_PLAN_EMPLOYEE_LINK"
+                                 constraintName="FK_TACPLAEMP_ON_EMPLOYEE" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="7" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="TACTICAL_PLAN_ID" baseTableName="TACTICAL_PLAN_EMPLOYEE_LINK"
+                                 constraintName="FK_TACPLAEMP_ON_TACTICAL_PLAN" referencedColumnNames="ID"
+                                 referencedTableName="TACTICAL_PLAN"/>
+    </changeSet>
+    <changeSet id="8" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="ASSIGNED_TEAM_ID" baseTableName="TACTICAL_PLAN"
+                                 constraintName="FK_TACTICAL_PLAN_ON_ASSIGNED_TEAM" referencedColumnNames="ID"
+                                 referencedTableName="TEAM"/>
+    </changeSet>
+    <changeSet id="9" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="MAINTENANCE_SCENARIO_ID" baseTableName="TACTICAL_PLAN"
+                                 constraintName="FK_TACTICAL_PLAN_ON_MAINTENANCE_SCENARIO" referencedColumnNames="ID"
+                                 referencedTableName="THEORETICAL_MAINTENANCE_SCENARIO"/>
+    </changeSet>
+    <changeSet id="10" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="PLANNING_SCENARIO_ID" baseTableName="TACTICAL_PLAN"
+                                 constraintName="FK_TACTICAL_PLAN_ON_PLANNING_SCENARIO" referencedColumnNames="ID"
+                                 referencedTableName="YEARLY_BUDGET_PLANNING_SCENARIO"/>
+    </changeSet>
+    <changeSet id="11" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="INFRASTRUCTURE_NODE_ID"
+                                 baseTableName="THEORETICAL_MAINTENANCE_SCENARIO"
+                                 constraintName="FK_THEORETICAL_MAINTENANCE_SCENARIO_ON_INFRASTRUCTURE_NODE"
+                                 referencedColumnNames="ID" referencedTableName="INFRASTRUCTURE_HIERARCHY"/>
+    </changeSet>
+    <changeSet id="12" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="CREATED_BY_ID" baseTableName="YEARLY_BUDGET_PLANNING_SCENARIO"
+                                 constraintName="FK_YEARLY_BUDGET_PLANNING_SCENARIO_ON_CREATED_BY"
+                                 referencedColumnNames="ID" referencedTableName="EMPLOYEE"/>
+    </changeSet>
+</databaseChangeLog>

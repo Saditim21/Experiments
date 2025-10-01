@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://budgetCategoryListView.title"
+      focusComponent="budgetCategoriesTreeDataGrid">
+    <data>
+        <collection id="budgetCategoriesDc"
+                    class="com.company.experiments.entity.BudgetCategory">
+            <fetchPlan extends="_base">
+                <property name="parentCategory" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="budgetCategoriesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from BudgetCategory e order by e.name]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="budgetCategoriesDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="budgetCategoriesTreeDataGrid.create"/>
+            <button id="editButton" action="budgetCategoriesTreeDataGrid.edit"/>
+            <button id="removeButton" action="budgetCategoriesTreeDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="budgetCategoriesDl"/>
+        </hbox>
+        <treeDataGrid id="budgetCategoriesTreeDataGrid"
+                      width="100%"
+                      minHeight="20em"
+                      dataContainer="budgetCategoriesDc"
+                      hierarchyProperty="parentCategory">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="code"/>
+                <column property="name"/>
+                <column property="categoryType"/>
+            </columns>
+        </treeDataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://healthAlertDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="healthAlertDc"
+                  class="com.company.experiments.entity.HealthAlert">
+            <fetchPlan extends="_base">
+                <property name="infrastructureNode" fetchPlan="_instance_name"/>
+                <property name="assignedTo" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <hbox width="100%" spacing="true">
+            <vbox width="60%" spacing="true">
+                <formLayout id="form" dataContainer="healthAlertDc">
+                    <textField id="alertIdField" property="alertId" required="true"/>
+                    <entityPicker id="infrastructureNodeField" property="infrastructureNode" required="true">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <entityComboBox id="alertTypeField" property="alertType" required="true"/>
+                    <entityComboBox id="severityField" property="severity" required="true"/>
+                    <dateTimePicker id="detectedAtField" property="detectedAt" required="true"/>
+                    <textArea id="descriptionField" property="description" required="true" height="5em"/>
+                    <textArea id="sensorDataField" property="sensorData" height="5em"/>
+                    <datePicker id="predictedFailureDateField" property="predictedFailureDate"/>
+                    <textField id="probabilityScoreField" property="probabilityScore"/>
+                    <entityComboBox id="statusField" property="status" required="true"/>
+                    <entityPicker id="assignedToField" property="assignedTo">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <dateTimePicker id="resolvedAtField" property="resolvedAt" readOnly="true"/>
+                    <textArea id="resolutionNotesField" property="resolutionNotes" height="5em"/>
+                </formLayout>
+
+                <hbox id="actionButtons" spacing="true" padding="true">
+                    <button id="startInvestigationButton" text="Start Investigation" themeNames="primary"/>
+                    <button id="resolveButton" text="Resolve Alert" themeNames="success"/>
+                    <button id="markFalsePositiveButton" text="Mark False Positive" themeNames="error"/>
+                </hbox>
+            </vbox>
+
+            <vbox width="40%" spacing="true" padding="true"
+                  style="background-color: #fafafa; border-radius: 8px; padding: 16px;">
+                <h3 text="Alert Timeline" style="margin-top: 0;"/>
+                <div id="timelineContainer" width="100%" height="100%"/>
+            </vbox>
+        </hbox>
+
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://theoreticalMaintenanceScenarioListView.title"
+      focusComponent="theoreticalMaintenanceScenarioDataGrid">
+    <data>
+        <collection id="theoreticalMaintenanceScenarioDc"
+                    class="com.company.experiments.entity.TheoreticalMaintenanceScenario">
+            <fetchPlan extends="_base">
+                <property name="infrastructureNode" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="theoreticalMaintenanceScenarioDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from TheoreticalMaintenanceScenario e order by e.scenarioName]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="theoreticalMaintenanceScenarioDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="theoreticalMaintenanceScenarioDataGrid.create"/>
+            <button id="editButton" action="theoreticalMaintenanceScenarioDataGrid.edit"/>
+            <button id="removeButton" action="theoreticalMaintenanceScenarioDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="theoreticalMaintenanceScenarioDl"/>
+        </hbox>
+        <dataGrid id="theoreticalMaintenanceScenarioDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="theoreticalMaintenanceScenarioDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="scenarioCode"/>
+                <column property="scenarioName"/>
+                <column property="infrastructureNode"/>
+                <column property="maintenanceType"/>
+                <column property="estimatedDuration"/>
+                <column property="estimatedCost"/>
+                <column property="frequency"/>
+                <column property="priority"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://teamListView.title"
+      focusComponent="teamsDataGrid">
+    <data>
+        <collection id="teamsDc"
+                    class="com.company.experiments.entity.Team">
+            <fetchPlan extends="_base">
+                <property name="teamLead" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="teamsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Team e order by e.name]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="teamsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="teamsDataGrid.create"/>
+            <button id="editButton" action="teamsDataGrid.edit"/>
+            <button id="removeButton" action="teamsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="teamsDl"/>
+        </hbox>
+        <dataGrid id="teamsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="teamsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="code"/>
+                <column property="name"/>
+                <column property="department"/>
+                <column property="teamLead"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

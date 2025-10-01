@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://scenarioComparisonDashboardView.title">
+    <data>
+        <instance id="scenarioComparisonDc"
+                  class="com.company.experiments.entity.ScenarioComparison">
+            <fetchPlan extends="_base">
+                <property name="baselineScenario" fetchPlan="_base">
+                    <property name="scenarioName"/>
+                    <property name="year"/>
+                    <property name="totalBudget"/>
+                    <property name="optimizationTarget"/>
+                </property>
+                <property name="alternativeScenarios" fetchPlan="_base">
+                    <property name="scenarioName"/>
+                    <property name="year"/>
+                    <property name="totalBudget"/>
+                    <property name="optimizationTarget"/>
+                </property>
+                <property name="createdBy" fetchPlan="_base">
+                    <property name="firstName"/>
+                    <property name="lastName"/>
+                    <property name="email"/>
+                    <property name="employeeCode"/>
+                </property>
+            </fetchPlan>
+            <loader/>
+        </instance>
+        <collection id="scenarioMetricsDc"
+                    class="com.company.experiments.entity.ScenarioMetrics">
+            <fetchPlan extends="_base">
+                <property name="scenario" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="scenarioMetricsDl">
+                <query>
+                    <![CDATA[select e from ScenarioMetrics e where e.scenario.id in :scenarioIds order by e.scenario.scenarioName, e.metricType]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <vbox width="100%" height="100%" padding="true" spacing="true">
+            <hbox width="100%" classNames="buttons-panel">
+                <button id="backButton" text="Back to List" icon="ARROW_LEFT"/>
+                <button id="refreshButton" text="Refresh" icon="REFRESH"/>
+                <button id="exportButton" text="Export Report" icon="DOWNLOAD"/>
+                <h2 id="titleLabel" text="Scenario Comparison Dashboard"/>
+            </hbox>
+
+            <tabSheet width="100%">
+                <tab id="comparisonTab" label="Comparison View">
+                    <vbox width="100%" spacing="true">
+                        <h3 text="Side-by-Side Comparison"/>
+                        <div id="comparisonTableHtml" width="100%" height="400px"/>
+                    </vbox>
+                </tab>
+
+                <tab id="chartsTab" label="Visual Charts">
+                    <vbox width="100%" spacing="true">
+                        <hbox width="100%" spacing="true">
+                            <vbox width="50%">
+                                <h3 text="Bar Chart Comparison"/>
+                                <div id="barChartHtml" width="100%" height="400px"/>
+                            </vbox>
+                            <vbox width="50%">
+                                <h3 text="Radar Chart Analysis"/>
+                                <div id="radarChartHtml" width="100%" height="400px"/>
+                            </vbox>
+                        </hbox>
+                    </vbox>
+                </tab>
+
+                <tab id="whatIfTab" label="What-If Analysis">
+                    <vbox width="100%" spacing="true" padding="true">
+                        <h3 text="What-If Analysis Tools"/>
+
+                        <formLayout>
+                            <select id="adjustScenarioSelect" label="Select Scenario to Adjust"/>
+                            <select id="adjustMetricSelect" label="Select Metric" itemsEnum="com.company.experiments.entity.MetricType"/>
+                            <bigDecimalField id="adjustValueField" label="Adjustment Value (%)"/>
+                            <button id="applyAdjustmentButton" text="Apply Adjustment"/>
+                            <button id="resetAdjustmentsButton" text="Reset All"/>
+                        </formLayout>
+
+                        <h3 text="Adjusted Results"/>
+                        <div id="whatIfResultsHtml" width="100%" height="400px"/>
+                    </vbox>
+                </tab>
+            </tabSheet>
+        </vbox>
+    </layout>
+</view>

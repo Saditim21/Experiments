@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://ruleScenarioDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="ruleScenarioDc"
+                  class="com.company.experiments.entity.RuleScenario">
+            <fetchPlan extends="_base">
+                <property name="createdBy" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="ruleScenarioDc">
+            <textField id="codeField" property="code" required="true"/>
+            <textField id="nameField" property="name" required="true"/>
+            <entityComboBox id="scenarioTypeField" property="scenarioType" required="true"/>
+            <textField id="priorityField" property="priority" required="true"/>
+            <checkbox id="isActiveField" property="isActive"/>
+            <textArea id="conditionsField" property="conditions" required="true" height="10em"/>
+            <textArea id="actionsField" property="actions" required="true" height="10em"/>
+            <textArea id="descriptionField" property="description" height="5em"/>
+            <entityPicker id="createdByField" property="createdBy" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <dateTimePicker id="createdAtField" property="createdAt" readOnly="true"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

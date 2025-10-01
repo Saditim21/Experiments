@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://infrastructureHierarchyDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="infrastructureHierarchyDc"
+                  class="com.company.experiments.entity.InfrastructureHierarchy">
+            <fetchPlan extends="_base">
+                <property name="infrastructureLevel" fetchPlan="_instance_name"/>
+                <property name="parentNode" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="infrastructureHierarchyDc">
+            <textField id="codeField" property="code" required="true"/>
+            <textField id="nameField" property="name" required="true"/>
+            <entityPicker id="infrastructureLevelField" property="infrastructureLevel" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="parentNodeField" property="parentNode">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="assetTypeField" property="assetType"/>
+            <entityComboBox id="statusField" property="status"/>
+            <datePicker id="installationDateField" property="installationDate"/>
+            <textField id="criticalityScoreField" property="criticalityScore"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

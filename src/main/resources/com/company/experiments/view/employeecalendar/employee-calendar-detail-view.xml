@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeCalendarDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="employeeCalendarDc"
+                  class="com.company.experiments.entity.EmployeeCalendar">
+            <fetchPlan extends="_base">
+                <property name="employee" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="employeeCalendarDc">
+            <entityPicker id="employeeField" property="employee" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <datePicker id="dateField" property="date" required="true"/>
+            <entityComboBox id="availabilityTypeField" property="availabilityType" required="true"/>
+            <textField id="hoursAvailableField" property="hoursAvailable"/>
+            <textArea id="notesField" property="notes" height="5em"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

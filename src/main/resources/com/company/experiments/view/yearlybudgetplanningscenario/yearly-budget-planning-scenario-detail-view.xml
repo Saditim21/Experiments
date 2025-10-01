@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://yearlyBudgetPlanningScenarioDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="yearlyBudgetPlanningScenarioDc"
+                  class="com.company.experiments.entity.YearlyBudgetPlanningScenario">
+            <fetchPlan extends="_base">
+                <property name="createdBy" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="yearlyBudgetPlanningScenarioDc">
+            <textField id="scenarioNameField" property="scenarioName" colspan="2"/>
+            <textField id="yearField" property="year"/>
+            <comboBox id="statusField" property="status"/>
+            <bigDecimalField id="totalBudgetField" property="totalBudget"/>
+            <comboBox id="optimizationTargetField" property="optimizationTarget"/>
+            <textArea id="constraintsField" property="constraints" colspan="2" height="10em"/>
+            <entityPicker id="createdByField" property="createdBy">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://tacticalPlanDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="tacticalPlanDc"
+                  class="com.company.experiments.entity.TacticalPlan">
+            <fetchPlan extends="_base">
+                <property name="planningScenario" fetchPlan="_instance_name"/>
+                <property name="maintenanceScenario" fetchPlan="_instance_name"/>
+                <property name="assignedTeam" fetchPlan="_instance_name"/>
+                <property name="assignedEmployees" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="tacticalPlanDc">
+            <textField id="planNameField" property="planName" colspan="2"/>
+            <entityPicker id="planningScenarioField" property="planningScenario" colspan="2">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="maintenanceScenarioField" property="maintenanceScenario" colspan="2">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <datePicker id="plannedStartDateField" property="plannedStartDate"/>
+            <datePicker id="plannedEndDateField" property="plannedEndDate"/>
+            <entityPicker id="assignedTeamField" property="assignedTeam" colspan="2">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityComboBox id="assignedEmployeesField" property="assignedEmployees" colspan="2"/>
+            <bigDecimalField id="budgetAllocatedField" property="budgetAllocated"/>
+            <comboBox id="statusField" property="status"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://yearlyBudgetDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="yearlyBudgetDc"
+                  class="com.company.experiments.entity.YearlyBudget">
+            <fetchPlan extends="_base">
+                <property name="budgetCategory" fetchPlan="_instance_name"/>
+                <property name="team" fetchPlan="_instance_name"/>
+                <property name="infrastructureLevel" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="yearlyBudgetDc">
+            <textField id="yearField" property="year" required="true"/>
+            <entityPicker id="budgetCategoryField" property="budgetCategory" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="teamField" property="team" required="true">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="infrastructureLevelField" property="infrastructureLevel">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="allocatedAmountField" property="allocatedAmount" required="true"/>
+            <textField id="spentAmountField" property="spentAmount"/>
+            <textField id="currencyField" property="currency" required="true"/>
+            <entityComboBox id="statusField" property="status" required="true"/>
+            <textArea id="notesField" property="notes" height="5em"/>
+        </formLayout>
+
+        <vbox spacing="true" padding="true" classNames="budget-summary">
+            <hbox spacing="true">
+                <span text="Remaining Amount:" classNames="bold"/>
+                <span id="remainingAmountLabel" classNames="bold" style="color: blue;"/>
+            </hbox>
+            <hbox spacing="true">
+                <span text="Spent Percentage:" classNames="bold"/>
+                <span id="spentPercentageLabel" classNames="bold"/>
+            </hbox>
+        </vbox>
+
+        <hbox id="workflowButtons" spacing="true" padding="true">
+            <button id="approveButton" text="Approve Budget" themeNames="primary success"/>
+            <button id="rejectButton" text="Reject to Draft" themeNames="error"/>
+        </hbox>
+
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

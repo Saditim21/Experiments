@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://employeeDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="employeeDc"
+                  class="com.company.experiments.entity.Employee">
+            <fetchPlan extends="_base">
+                <property name="team" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="employeeDc">
+            <textField id="employeeCodeField" property="employeeCode" required="true"/>
+            <textField id="firstNameField" property="firstName" required="true"/>
+            <textField id="lastNameField" property="lastName" required="true"/>
+            <textField id="emailField" property="email" required="true"/>
+            <textField id="phoneField" property="phone"/>
+            <entityPicker id="teamField" property="team">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityComboBox id="roleField" property="role"/>
+            <datePicker id="hireDateField" property="hireDate"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

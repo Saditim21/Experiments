@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://infrastructureLevelDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="infrastructureLevelDc"
+                  class="com.company.experiments.entity.InfrastructureLevel">
+            <fetchPlan extends="_base">
+                <property name="parentLevel" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+        <collection id="parentLevelsDc" class="com.company.experiments.entity.InfrastructureLevel">
+            <fetchPlan extends="_instance_name"/>
+            <loader id="parentLevelsDl">
+                <query>
+                    <![CDATA[select e from InfrastructureLevel e order by e.level]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="infrastructureLevelDc">
+            <textField id="codeField" property="code" required="true"/>
+            <textField id="nameField" property="name" required="true"/>
+            <textField id="levelField" property="level" required="true"/>
+            <entityPicker id="parentLevelField" property="parentLevel">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textArea id="descriptionField" property="description" height="9.5em"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

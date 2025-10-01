@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="Experiments">
+        <createTable tableName="BUDGET_CATEGORY">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BUDGET_CATEGORY"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CATEGORY_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PARENT_CATEGORY_ID" type="UUID"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="Experiments">
+        <createTable tableName="EMPLOYEE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EMPLOYEE"/>
+            </column>
+            <column name="FIRST_NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PHONE" type="VARCHAR(20)"/>
+            <column name="EMPLOYEE_CODE" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TEAM_ID" type="UUID"/>
+            <column name="ROLE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HIRE_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="Experiments">
+        <createTable tableName="EMPLOYEE_CALENDAR">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_EMPLOYEE_CALENDAR"/>
+            </column>
+            <column name="EMPLOYEE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATE_" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AVAILABILITY_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HOURS_AVAILABLE" type="DECIMAL(5, 2)"/>
+            <column name="NOTES" type="VARCHAR(500)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="Experiments">
+        <createTable tableName="HEALTH_ALERT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_HEALTH_ALERT"/>
+            </column>
+            <column name="ALERT_ID" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFRASTRUCTURE_NODE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ALERT_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SEVERITY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DETECTED_AT" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(2000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENSOR_DATA" type="VARCHAR(5000)"/>
+            <column name="PREDICTED_FAILURE_DATE" type="DATE"/>
+            <column name="PROBABILITY_SCORE" type="DECIMAL(5, 2)"/>
+            <column name="STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ASSIGNED_TO_ID" type="UUID"/>
+            <column name="RESOLVED_AT" type="DATETIME"/>
+            <column name="RESOLUTION_NOTES" type="VARCHAR(2000)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="Experiments">
+        <createTable tableName="LLM_CHAT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LLM_CHAT"/>
+            </column>
+            <column name="CHAT_ID" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHAT_NAME" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMPLOYEE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RELATED_ALERT_ID" type="UUID"/>
+            <column name="RELATED_INFRASTRUCTURE_ID" type="UUID"/>
+            <column name="STARTED_AT" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_MESSAGE_AT" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="Experiments">
+        <createTable tableName="LLM_CHAT_CONTEXT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LLM_CHAT_CONTEXT"/>
+            </column>
+            <column name="NAME" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTEXT_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFRASTRUCTURE_NODE_ID" type="UUID"/>
+            <column name="CONTEXT_DATA" type="VARCHAR(10000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMBEDDINGS" type="VARCHAR(5000)"/>
+            <column name="CREATED_AT" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="7" author="Experiments">
+        <createTable tableName="LLM_CHAT_MESSAGE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LLM_CHAT_MESSAGE"/>
+            </column>
+            <column name="CHAT_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MESSAGE_ROLE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MESSAGE_CONTENT" type="VARCHAR(10000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOKENS_USED" type="INT"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="8" author="Experiments">
+        <createTable tableName="LLM_CHAT_MESSAGE_CONTEXT">
+            <column name="CONTEXT_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LLM_CHAT_MESSAGE_CONTEXT"/>
+            </column>
+            <column name="MESSAGE_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LLM_CHAT_MESSAGE_CONTEXT"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="9" author="Experiments">
+        <createTable tableName="RULE_EXECUTION_LOG">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RULE_EXECUTION_LOG"/>
+            </column>
+            <column name="RULE_SCENARIO_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXECUTED_AT" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUCCESS" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INPUT_DATA" type="VARCHAR(5000)"/>
+            <column name="OUTPUT_DATA" type="VARCHAR(5000)"/>
+            <column name="ERROR_MESSAGE" type="VARCHAR(2000)"/>
+            <column name="EXECUTION_TIME_MS" type="INT"/>
+            <column name="TRIGGERED_BY_ID" type="UUID"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="10" author="Experiments">
+        <createTable tableName="RULE_SCENARIO">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RULE_SCENARIO"/>
+            </column>
+            <column name="NAME" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCENARIO_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRIORITY" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_ACTIVE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONDITIONS" type="VARCHAR(5000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIONS" type="VARCHAR(5000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(2000)"/>
+            <column name="CREATED_BY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_AT" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_EXECUTED_AT" type="DATETIME"/>
+            <column name="EXECUTION_COUNT" type="INT"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="11" author="Experiments">
+        <createTable tableName="TEAM">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEAM"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEPARTMENT" type="VARCHAR(100)"/>
+            <column name="TEAM_LEAD_ID" type="UUID"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="12" author="Experiments">
+        <createTable tableName="TEAM_INFRASTRUCTURE_RESPONSIBILITY">
+            <column name="INFRASTRUCTURE_HIERARCHY_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEAM_INFRASTRUCTURE_RESPONSIBILITY"/>
+            </column>
+            <column name="TEAM_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEAM_INFRASTRUCTURE_RESPONSIBILITY"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="13" author="Experiments">
+        <createTable tableName="YEARLY_BUDGET">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_YEARLY_BUDGET"/>
+            </column>
+            <column name="YEAR_" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BUDGET_CATEGORY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TEAM_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INFRASTRUCTURE_LEVEL_ID" type="UUID"/>
+            <column name="ALLOCATED_AMOUNT" type="DECIMAL(14, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPENT_AMOUNT" type="DECIMAL(14, 2)"/>
+            <column name="CURRENCY" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NOTES" type="VARCHAR(1000)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="14" author="Experiments">
+        <createIndex indexName="IDX_BUDGET_CATEGORY_CODE" tableName="BUDGET_CATEGORY" unique="true">
+            <column name="CODE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="15" author="Experiments">
+        <createIndex indexName="IDX_EMPLOYEE_CALENDAR_EMPLOYEE_DATE" tableName="EMPLOYEE_CALENDAR" unique="true">
+            <column name="EMPLOYEE_ID"/>
+            <column name="DATE_"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="16" author="Experiments">
+        <createIndex indexName="IDX_EMPLOYEE_CODE" tableName="EMPLOYEE" unique="true">
+            <column name="EMPLOYEE_CODE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="17" author="Experiments">
+        <createIndex indexName="IDX_EMPLOYEE_EMAIL" tableName="EMPLOYEE" unique="true">
+            <column name="EMAIL"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="18" author="Experiments">
+        <createIndex indexName="IDX_HEALTH_ALERT_DETECTED_AT" tableName="HEALTH_ALERT">
+            <column name="DETECTED_AT"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="19" author="Experiments">
+        <createIndex indexName="IDX_HEALTH_ALERT_ID" tableName="HEALTH_ALERT" unique="true">
+            <column name="ALERT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="20" author="Experiments">
+        <createIndex indexName="IDX_HEALTH_ALERT_INFRASTRUCTURE" tableName="HEALTH_ALERT">
+            <column name="INFRASTRUCTURE_NODE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INFRASTRUCTURE_NODE_ID" baseTableName="HEALTH_ALERT"
+                                 constraintName="FK_HEALTH_ALERT_ON_INFRASTRUCTURE_NODE" referencedColumnNames="ID"
+                                 referencedTableName="INFRASTRUCTURE_HIERARCHY"/>
+    </changeSet>
+    <changeSet id="21" author="Experiments">
+        <createIndex indexName="IDX_HEALTH_ALERT_SEVERITY" tableName="HEALTH_ALERT">
+            <column name="SEVERITY"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="22" author="Experiments">
+        <createIndex indexName="IDX_HEALTH_ALERT_STATUS" tableName="HEALTH_ALERT">
+            <column name="STATUS"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="23" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_CONTEXT_CREATED_AT" tableName="LLM_CHAT_CONTEXT">
+            <column name="CREATED_AT"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="24" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_CONTEXT_INFRASTRUCTURE" tableName="LLM_CHAT_CONTEXT">
+            <column name="INFRASTRUCTURE_NODE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INFRASTRUCTURE_NODE_ID" baseTableName="LLM_CHAT_CONTEXT"
+                                 constraintName="FK_LLM_CHAT_CONTEXT_ON_INFRASTRUCTURE_NODE" referencedColumnNames="ID"
+                                 referencedTableName="INFRASTRUCTURE_HIERARCHY"/>
+    </changeSet>
+    <changeSet id="25" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_CONTEXT_TYPE" tableName="LLM_CHAT_CONTEXT">
+            <column name="CONTEXT_TYPE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="26" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_EMPLOYEE" tableName="LLM_CHAT">
+            <column name="EMPLOYEE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="LLM_CHAT"
+                                 constraintName="FK_LLM_CHAT_ON_EMPLOYEE" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="27" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_ID" tableName="LLM_CHAT" unique="true">
+            <column name="CHAT_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="28" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_MESSAGE_CHAT" tableName="LLM_CHAT_MESSAGE">
+            <column name="CHAT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CHAT_ID" baseTableName="LLM_CHAT_MESSAGE"
+                                 constraintName="FK_LLM_CHAT_MESSAGE_ON_CHAT" referencedColumnNames="ID"
+                                 referencedTableName="LLM_CHAT"/>
+    </changeSet>
+    <changeSet id="29" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_MESSAGE_TIMESTAMP" tableName="LLM_CHAT_MESSAGE">
+            <column name="TIMESTAMP"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="30" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_STARTED_AT" tableName="LLM_CHAT">
+            <column name="STARTED_AT"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="31" author="Experiments">
+        <createIndex indexName="IDX_LLM_CHAT_STATUS" tableName="LLM_CHAT">
+            <column name="STATUS"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="32" author="Experiments">
+        <createIndex indexName="IDX_RULE_EXECUTION_LOG_EXECUTED_AT" tableName="RULE_EXECUTION_LOG">
+            <column name="EXECUTED_AT"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="33" author="Experiments">
+        <createIndex indexName="IDX_RULE_EXECUTION_LOG_SCENARIO" tableName="RULE_EXECUTION_LOG">
+            <column name="RULE_SCENARIO_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="RULE_SCENARIO_ID" baseTableName="RULE_EXECUTION_LOG"
+                                 constraintName="FK_RULE_EXECUTION_LOG_ON_RULE_SCENARIO" referencedColumnNames="ID"
+                                 referencedTableName="RULE_SCENARIO"/>
+    </changeSet>
+    <changeSet id="34" author="Experiments">
+        <createIndex indexName="IDX_RULE_EXECUTION_LOG_SUCCESS" tableName="RULE_EXECUTION_LOG">
+            <column name="SUCCESS"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="35" author="Experiments">
+        <createIndex indexName="IDX_RULE_SCENARIO_ACTIVE" tableName="RULE_SCENARIO">
+            <column name="IS_ACTIVE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="36" author="Experiments">
+        <createIndex indexName="IDX_RULE_SCENARIO_CODE" tableName="RULE_SCENARIO" unique="true">
+            <column name="CODE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="37" author="Experiments">
+        <createIndex indexName="IDX_RULE_SCENARIO_PRIORITY" tableName="RULE_SCENARIO">
+            <column name="PRIORITY"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="38" author="Experiments">
+        <createIndex indexName="IDX_RULE_SCENARIO_TYPE" tableName="RULE_SCENARIO">
+            <column name="SCENARIO_TYPE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="39" author="Experiments">
+        <createIndex indexName="IDX_TEAM_CODE" tableName="TEAM" unique="true">
+            <column name="CODE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="40" author="Experiments">
+        <createIndex indexName="IDX_YEARLY_BUDGET_CATEGORY" tableName="YEARLY_BUDGET">
+            <column name="BUDGET_CATEGORY_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="BUDGET_CATEGORY_ID" baseTableName="YEARLY_BUDGET"
+                                 constraintName="FK_YEARLY_BUDGET_ON_BUDGET_CATEGORY" referencedColumnNames="ID"
+                                 referencedTableName="BUDGET_CATEGORY"/>
+    </changeSet>
+    <changeSet id="41" author="Experiments">
+        <createIndex indexName="IDX_YEARLY_BUDGET_STATUS" tableName="YEARLY_BUDGET">
+            <column name="STATUS"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="42" author="Experiments">
+        <createIndex indexName="IDX_YEARLY_BUDGET_TEAM" tableName="YEARLY_BUDGET">
+            <column name="TEAM_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TEAM_ID" baseTableName="YEARLY_BUDGET"
+                                 constraintName="FK_YEARLY_BUDGET_ON_TEAM" referencedColumnNames="ID"
+                                 referencedTableName="TEAM"/>
+    </changeSet>
+    <changeSet id="43" author="Experiments">
+        <createIndex indexName="IDX_YEARLY_BUDGET_YEAR" tableName="YEARLY_BUDGET">
+            <column name="YEAR_"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="44" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="PARENT_CATEGORY_ID" baseTableName="BUDGET_CATEGORY"
+                                 constraintName="FK_BUDGET_CATEGORY_ON_PARENT_CATEGORY" referencedColumnNames="ID"
+                                 referencedTableName="BUDGET_CATEGORY"/>
+    </changeSet>
+    <changeSet id="45" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="EMPLOYEE_CALENDAR"
+                                 constraintName="FK_EMPLOYEE_CALENDAR_ON_EMPLOYEE" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="46" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="TEAM_ID" baseTableName="EMPLOYEE" constraintName="FK_EMPLOYEE_ON_TEAM"
+                                 referencedColumnNames="ID" referencedTableName="TEAM"/>
+    </changeSet>
+    <changeSet id="47" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="ASSIGNED_TO_ID" baseTableName="HEALTH_ALERT"
+                                 constraintName="FK_HEALTH_ALERT_ON_ASSIGNED_TO" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="48" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="CONTEXT_ID" baseTableName="LLM_CHAT_MESSAGE_CONTEXT"
+                                 constraintName="FK_LLMCHAMESCON_ON_LLM_CHAT_CONTEXT" referencedColumnNames="ID"
+                                 referencedTableName="LLM_CHAT_CONTEXT"/>
+    </changeSet>
+    <changeSet id="49" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="MESSAGE_ID" baseTableName="LLM_CHAT_MESSAGE_CONTEXT"
+                                 constraintName="FK_LLMCHAMESCON_ON_LLM_CHAT_MESSAGE" referencedColumnNames="ID"
+                                 referencedTableName="LLM_CHAT_MESSAGE"/>
+    </changeSet>
+    <changeSet id="50" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="RELATED_ALERT_ID" baseTableName="LLM_CHAT"
+                                 constraintName="FK_LLM_CHAT_ON_RELATED_ALERT" referencedColumnNames="ID"
+                                 referencedTableName="HEALTH_ALERT"/>
+    </changeSet>
+    <changeSet id="51" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="RELATED_INFRASTRUCTURE_ID" baseTableName="LLM_CHAT"
+                                 constraintName="FK_LLM_CHAT_ON_RELATED_INFRASTRUCTURE" referencedColumnNames="ID"
+                                 referencedTableName="INFRASTRUCTURE_HIERARCHY"/>
+    </changeSet>
+    <changeSet id="52" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="TRIGGERED_BY_ID" baseTableName="RULE_EXECUTION_LOG"
+                                 constraintName="FK_RULE_EXECUTION_LOG_ON_TRIGGERED_BY" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="53" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="CREATED_BY_ID" baseTableName="RULE_SCENARIO"
+                                 constraintName="FK_RULE_SCENARIO_ON_CREATED_BY" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="54" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="INFRASTRUCTURE_HIERARCHY_ID"
+                                 baseTableName="TEAM_INFRASTRUCTURE_RESPONSIBILITY"
+                                 constraintName="FK_TEAINFRES_ON_INFRASTRUCTURE_HIERARCHY" referencedColumnNames="ID"
+                                 referencedTableName="INFRASTRUCTURE_HIERARCHY"/>
+    </changeSet>
+    <changeSet id="55" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="TEAM_ID" baseTableName="TEAM_INFRASTRUCTURE_RESPONSIBILITY"
+                                 constraintName="FK_TEAINFRES_ON_TEAM" referencedColumnNames="ID"
+                                 referencedTableName="TEAM"/>
+    </changeSet>
+    <changeSet id="56" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="TEAM_LEAD_ID" baseTableName="TEAM"
+                                 constraintName="FK_TEAM_ON_TEAM_LEAD" referencedColumnNames="ID"
+                                 referencedTableName="EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="57" author="Experiments">
+        <addForeignKeyConstraint baseColumnNames="INFRASTRUCTURE_LEVEL_ID" baseTableName="YEARLY_BUDGET"
+                                 constraintName="FK_YEARLY_BUDGET_ON_INFRASTRUCTURE_LEVEL" referencedColumnNames="ID"
+                                 referencedTableName="INFRASTRUCTURE_LEVEL"/>
+    </changeSet>
+    <changeSet id="58" author="Experiments">
+        <modifyDataType columnName="STATUS" newDataType="VARCHAR(255)" tableName="INFRASTRUCTURE_HIERARCHY"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://infrastructureHierarchyListView.title"
+      focusComponent="infrastructureHierarchiesTreeDataGrid">
+    <data>
+        <collection id="infrastructureHierarchiesDc"
+                    class="com.company.experiments.entity.InfrastructureHierarchy">
+            <fetchPlan extends="_base">
+                <property name="infrastructureLevel" fetchPlan="_instance_name"/>
+                <property name="parentNode" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="infrastructureHierarchiesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from InfrastructureHierarchy e order by e.name]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="infrastructureHierarchiesDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="infrastructureHierarchiesTreeDataGrid.create"/>
+            <button id="editButton" action="infrastructureHierarchiesTreeDataGrid.edit"/>
+            <button id="removeButton" action="infrastructureHierarchiesTreeDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="infrastructureHierarchiesDl"/>
+        </hbox>
+        <treeDataGrid id="infrastructureHierarchiesTreeDataGrid"
+                      width="100%"
+                      minHeight="20em"
+                      dataContainer="infrastructureHierarchiesDc"
+                      hierarchyProperty="parentNode">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="code"/>
+                <column property="name"/>
+                <column property="infrastructureLevel"/>
+                <column property="assetType"/>
+                <column property="status"/>
+                <column property="installationDate"/>
+                <column property="criticalityScore"/>
+            </columns>
+        </treeDataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://healthAlertListView.title"
+      focusComponent="healthAlertsDataGrid">
+    <data>
+        <collection id="healthAlertsDc"
+                    class="com.company.experiments.entity.HealthAlert">
+            <fetchPlan extends="_base">
+                <property name="infrastructureNode" fetchPlan="_instance_name"/>
+                <property name="assignedTo" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="healthAlertsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from HealthAlert e order by e.detectedAt desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="healthAlertsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="healthAlertsDataGrid.create"/>
+            <button id="editButton" action="healthAlertsDataGrid.edit"/>
+            <button id="removeButton" action="healthAlertsDataGrid.remove"/>
+            <button id="healthPortalButton" text="Health Portal"/>
+            <simplePagination id="pagination" dataLoader="healthAlertsDl"/>
+        </hbox>
+        <dataGrid id="healthAlertsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="healthAlertsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="alertId"/>
+                <column property="infrastructureNode"/>
+                <column property="alertType"/>
+                <column property="severity"/>
+                <column property="detectedAt"/>
+                <column property="status"/>
+                <column property="assignedTo"/>
+                <column property="probabilityScore"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>
