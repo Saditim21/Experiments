@@ -5,4 +5,4 @@ nixPkgs = ['jdk17']
 cmds = ['chmod +x gradlew', './gradlew clean bootJar --no-daemon']
 
 [phases.start]
-cmd = 'java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar build/libs/*.jar'
+cmd = 'java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar build/libs/Experiments-0.0.1-SNAPSHOT.jar'
