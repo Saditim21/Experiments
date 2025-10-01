@@ -63,6 +63,10 @@ idea {
 }
 
 vaadin {
-    optimizeBundle = false
+    optimizeBundle = true
+    productionMode = true
     pnpmEnable = true
+
+    // Force all resources to be bundled
+    forceProductionBuild = true
 }
