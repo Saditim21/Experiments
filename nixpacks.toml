@@ -4,5 +4,8 @@ nixPkgs = ['jdk17']
 [phases.build]
 cmds = ['chmod +x gradlew', './gradlew clean bootJar --no-daemon']
 
-[phases.start]
-cmd = 'java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar build/libs/Experiments-0.0.1-SNAPSHOT.jar'
+[start]
+cmd = 'java -jar build/libs/Experiments-0.0.1-SNAPSHOT.jar'
+
+[variables]
+SPRING_PROFILES_ACTIVE = 'prod'
