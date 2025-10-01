@@ -5,4 +5,4 @@ nixPkgs = ['jdk17']
 cmds = ['chmod +x gradlew', './gradlew clean bootJar --no-daemon']
 
 [start]
-cmd = 'java -Dspring.profiles.active=prod -Dserver.port=${PORT:-8080} -jar build/libs/Experiments-0.0.1-SNAPSHOT.jar'
+cmd = 'java -Xmx512m -Xms256m -XX:MaxMetaspaceSize=256m -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -Dspring.profiles.active=prod -Dserver.port=${PORT:-8080} -jar build/libs/Experiments-0.0.1-SNAPSHOT.jar'
