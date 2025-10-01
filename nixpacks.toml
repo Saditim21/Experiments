@@ -2,7 +2,7 @@
 nixPkgs = ['jdk17', 'nodejs']
 
 [phases.build]
-cmds = ['chmod +x gradlew', './gradlew clean build -Pvaadin.productionMode --no-daemon']
+cmds = ['chmod +x gradlew', './gradlew clean vaadinClean vaadinPrepareFrontend vaadinBuildFrontend bootJar -Pvaadin.productionMode --no-daemon']
 
 [start]
 cmd = 'java -Xmx512m -Xms256m -XX:MaxMetaspaceSize=256m -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication -Dspring.profiles.active=prod -Dserver.port=${PORT:-8080} -jar build/libs/Experiments-0.0.1-SNAPSHOT.jar'

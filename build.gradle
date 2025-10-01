@@ -65,4 +65,5 @@ idea {
 vaadin {
     optimizeBundle = true
     productionMode = true
+    pnpmEnable = true
 }
