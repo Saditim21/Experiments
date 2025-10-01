@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ['jdk17']
+
+[phases.build]
+cmds = ['chmod +x gradlew', './gradlew clean bootJar --no-daemon']
+
+[phases.start]
+cmd = 'java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar build/libs/*.jar'
